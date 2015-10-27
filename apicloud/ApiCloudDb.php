@@ -265,7 +265,7 @@ class ApiCloudDb
         $filter = $query->build();
         if($filter)
         {
-            $this->url .= '?filter='.json_encode( $filter );
+            $this->url .= '?filter='.urlencode( json_encode( $filter ) );
         }
         $this->method = 'GET';
         $res = $this->execute();

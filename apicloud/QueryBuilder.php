@@ -186,7 +186,11 @@ class QueryBuilder
         {
             foreach ($this->orders as $item)
             {
-                $filter[] = $item;
+                $filter['order'][] = $item;
+            }
+            if( count( $filter['order'] ) == 1 )
+            {
+                $filter['order'] = $filter['order'][0];
             }
         }
 
@@ -210,7 +214,6 @@ class QueryBuilder
 
         if( array_keys($where) === range(0, count($where) - 1) && count($where) == 3 )
         {
-            echo 'in';
             if( $where[0] == 'and' || $where[0] == 'or' )
             {
                 $condition[$where[0]][] = $this->getWhere($where[1]);
@@ -218,39 +221,39 @@ class QueryBuilder
             }
             elseif( $where[0] == 'between' )
             {
-                $condition['between'][$where[1]] = $where[2];
+                $condition[$where[1]]['between'] = $where[2];
             }
             elseif( $where[0] == '>')
             {
-                $condition['gt'][$where[1]] = $where[2];
+                $condition[$where[1]]['gt'] = $where[2];
             }
             elseif( $where[0] == '<')
             {
-                $condition['lt'][$where[1]] = $where[2];
+                $condition[$where[1]]['lt'] = $where[2];
             }
             elseif( $where[0] == '>=')
             {
-                $condition['gte'][$where[1]] = $where[2];
+                $condition[$where[1]]['gte'] = $where[2];
             }
             elseif( $where[0] == '=<')
             {
-                $condition['lte'][$where[1]] = $where[2];
+                $condition[$where[1]]['lte'] = $where[2];
             }
             elseif( $where[0] == 'in' )
             {
-                $condition['inq'][$where[1]] = $where[2];
+                $condition[$where[1]]['inq'] = $where[2];
             }
             elseif( $where[0] == 'not in' )
             {
-                $condition['nin'][$where[1]] = $where[2];
+                $condition[$where[1]]['nin'] = $where[2];
             }
             elseif( $where[0] == '!=' )
             {
-                $condition['ne'][$where[1]] = $where[2];
+                $condition[$where[1]]['ne'] = $where[2];
             }
             elseif( $where[0] == 'like' )
             {
-                $condition['like'][$where[1]] = $where[2];
+                $condition[$where[1]]['like'] = $where[2];
             }
         }
         elseif(array_keys($where) !== range(0, count($where) - 1))
